@@ -1,0 +1,36 @@
+{
+  "name": "munin",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Git-native external memory bank for AI agents",
+  "keywords": ["ai", "agents", "memory", "git", "cli", "external-memory"],
+  "license": "MIT",
+  "bin": {
+    "munin": "src/cli/index.ts"
+  },
+  "scripts": {
+    "dev": "bun run src/cli/index.ts",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "files": [
+    "src/",
+    "templates/",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "commander": "^13.x",
+    "chalk": "^5.x",
+    "yaml": "^2.x",
+    "glob": "^11.x",
+    "ora": "^8.x"
+  },
+  "devDependencies": {
+    "bun": "^1.2.x",
+    "@types/bun": "latest",
+    "typescript": "^5.7.x"
+  }
+}
