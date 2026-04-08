@@ -4,6 +4,7 @@ import * as fs from "node:fs/promises";
 import { ExitCode } from "../../types/errors.js";
 import { parseAgentsConfig } from "../../core/agents-parser.js";
 import { initMemoryRepo } from "../../core/memory-repo.js";
+import { injectProtocol } from "../../core/protocol.js";
 import { isGitInstalled } from "../../git/git-exec.js";
 import { output } from "../output.js";
 
@@ -44,10 +45,15 @@ export function registerInitCommand(program: Command) {
         const projectName = path.basename(cwd);
         const result = await initMemoryRepo(config, cwd, projectName, { dryRun: options.dryRun });
 
+        let protocolInjected = false;
+        if (!options.dryRun) {
+          protocolInjected = await injectProtocol(agentsPath);
+        }
+
         output({
           success: true,
           command: "init",
-          data: { ...result, dryRun: options.dryRun },
+          data: { ...result, protocolInjected, dryRun: options.dryRun },
           message: options.dryRun ? "Dry run: no changes applied" : "Memory repository initialized"
         }, options.json);
       } catch (err: any) {
